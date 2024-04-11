@@ -9,11 +9,12 @@ import org.sid.ebankingbanckend.enums.AccountStatus;
 import java.util.Date;
 import java.util.List;
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) // pour héritage dans la classe mere
-// // comme on utilise SINGLE_TABLE, on crée le type
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // pour héritage dans la classe mere
+// comme on utilise SINGLE_TABLE, on crée le type
+@DiscriminatorColumn(name = "TYPE", length = 4)
 @Entity
 @Data  @NoArgsConstructor  @AllArgsConstructor
-public class   BankAccount {
+public class  BankAccount {
     @Id
     private String id; //le RIP
     private double balance; // le solde
@@ -25,6 +26,6 @@ public class   BankAccount {
     @ManyToOne
     private Customer customer;
     // Un compte peut effectuer plusieurs opérations
-    @OneToMany(mappedBy = "bankAccount")
+    @OneToMany(mappedBy = "bankAccount" , fetch = FetchType.LAZY)
     private List<AccountOperation> accountOperations;
 }
