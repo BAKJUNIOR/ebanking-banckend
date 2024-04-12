@@ -1,5 +1,6 @@
 package org.sid.ebankingbanckend.services;
 
+import org.sid.ebankingbanckend.dtos.CustomerDTO;
 import org.sid.ebankingbanckend.entities.BankAccount;
 import org.sid.ebankingbanckend.entities.CurrentAccount;
 import org.sid.ebankingbanckend.entities.Customer;
@@ -13,14 +14,14 @@ import java.util.List;
 //Ici, on va define les besoins fonctionnels d'appli, define toutes les opérations
 public interface BankAccountService {
     // operation pour créer ou ajouter des clients
-    Customer saveCustomer(Customer customer);   // créer une méthode saveCustomer
+    CustomerDTO saveCustomer(CustomerDTO customerDTO);   // créer une méthode saveCustomer
 
     // operation pour créer un compte
     CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
     SavingAccount saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
 
     // operation pour consulter une liste de client
-    List<Customer> listCustomer();
+    List<CustomerDTO> listCustomer();
 
     // operation pour consulter un compte
     BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
@@ -32,4 +33,6 @@ public interface BankAccountService {
     void transfert(String accoundIdSource, String accoundIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficentException;
 
     List<BankAccount> bankAccountList();
+
+    CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 }
